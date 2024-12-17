@@ -1,0 +1,123 @@
+Title: To Generate a Dynamic Timetable from Subject-Teacher Bindings with Constraints
+
+Context:
+I am building a timetable generator application with both manual and automatic scheduling options. Currently, manual scheduling is tedious and time-consuming, so I want to implement a feature to automatically generate a timetable dynamically. This feature will use subject-teacher bindings to schedule classes for an entire week (6 days, Monday to Saturday) with specific constraints.
+
+Each day has a total of 7 slots with two fixed breaks (at specific times). The total available slots for the entire week are 42 hours (7 slots × 6 days). The slots are either 1-hour lectures or 2-hour practicals, and each subject-teacher binding defines how many slots are required for that subject each week.
+
+Goal:
+Using the binding data, dynamically generate the entire timetable for the week. The schedule must meet the constraints provided below. Each day's timetable should be saved in a DayTimeTable schema, and the full weekly schedule will be saved in the MainTimeTable schema. Each TimeSlot schema should be populated with the relevant data for each slot.
+
+Input Data (Dummy Bindings Example)
+Here is an example of the bindings data:
+
+const subjectTeacherBindings = [
+    {
+        subject: "Math",
+        teacher: "Alice",
+        type: "lecture",
+        total: 12,
+        max: 4
+    },
+    {
+        subject: "Physics",
+        teacher: "Bob",
+        type: "practical",
+        total: 6,
+        max: 2
+    },
+    {
+        subject: "Chemistry",
+        teacher: "Bob",
+        type: "lecture",
+        total: 7,
+        max: 4
+    },
+    {
+        subject: "Biology",
+        teacher: "Charlie",
+        type: "lecture",
+        total: 11,
+        max: 4
+    },
+    {
+        subject: "English",
+        teacher: "Alice",
+        type: "lecture",
+        total: 7,
+        max: 2
+    }
+];
+
+
+Explanation:
+
+Each binding defines a subject, the teacher assigned to it, the type (lecture or practical), the total slots needed for the week, and the maximum slots allowed per day.
+For example, Math requires 8 slots total (all 1-hour lectures) with a max of 2 slots per day for Math.
+Physics requires 6 slots total (all 2-hour practicals) with a max of 1 slot per day.
+Constraints to Follow
+Slot Allocation
+
+Allocate 7 slots per day for 6 days (Monday to Saturday) with two fixed breaks (the break times will be provided as inputs).
+Each day should strictly have 7 slots only and two break slots.
+Total slots for all bindings should add up to 42 slots for the week.
+Binding Constraints
+
+Each subject's slots must match the total mentioned in the binding.
+Slots must not exceed the max slots per day for each subject.
+Each subject can have both lectures and practicals (e.g., 4 lectures + 2 practicals in a week).
+Lecture vs. Practical Rules
+
+A lecture occupies 1 hour.
+A practical occupies 2 continuous hours.
+Practicals should not be split across breaks or the end of the day. For example, a practical should not start 1 hour before the break. It must have 2 continuous hours available before a break or end-of-day.
+Scheduling Strategy
+
+Randomly schedule slots but respect the constraints of total slots, daily max slots, and continuous practicals.
+Avoid filling the end-of-day slots or pre-break slots with the first hour of a practical.
+Each day must contain a mixture of different subjects to avoid repetitive schedules.
+Schema Usage
+
+Each day's timetable should be stored in a DayTimeTable.
+Each day's slots should be saved as TimeSlot entries.
+The complete week's schedule should be stored in the MainTimeTable schema, with references to each DayTimeTable.
+Data Models
+
+The MainTimeTable schema contains the week array, which references DayTimeTable.
+The DayTimeTable schema contains the day's name (Monday, Tuesday, etc.) and references to the slots via the TimeSlot schema.
+Each TimeSlot entry contains start and end times, the subject, the teacher, and the slot type (Lecture/Practical).
+
+const dailyTimeSlots = [
+    { id: '1', time: '10:15 AM - 11:15 AM', isBreak: false },
+    { id: '2', time: '11:15 AM - 12:15 PM', isBreak: false },
+    { id: '3', time: '12:15 PM - 1:15 PM', isBreak: false },
+    { id: '4', time: '1:15 PM - 1:45 PM', isBreak: true, breakType: 'Long Break' },
+    { id: '5', time: '1:45 PM - 2:45 PM', isBreak: false },
+    { id: '6', time: '2:45 PM - 3:45 PM', isBreak: false },
+    { id: '7', time: '3:45 PM - 4:00 PM', isBreak: true, breakType: 'Short Break' },
+    { id: '8', time: '4:00 PM - 5:00 PM', isBreak: false },
+    { id: '9', time: '5:00 PM - 6:00 PM', isBreak: false }
+];
+
+const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+
+Explanation:
+
+Each day has 7 slots, 2 breaks, and proper handling of 2-hour practicals.
+The "Physics" practical (2 hours) was scheduled in slot 4, ensuring it didn't cross a break.
+How to Implement (Step-by-Step)
+Input: Use the bindings to calculate total slots required for the week.
+Initialize the Week: Prepare 6 empty DayTimeTable entries (Monday-Saturday) with 7 slots each (plus 2 fixed breaks).
+Allocation Algorithm:
+Loop over the 42 total slots and allocate based on the bindings.
+Ensure the daily slot limits (max constraints) are respected.
+Avoid placing a practical in a slot that would split it before a break.
+Store the Data: Store each day in a DayTimeTable. Store all days in the MainTimeTable.
+Output: Return the timetable for the week as well as references to the data stored in the database.
+Notes and Tips
+Use an efficient randomization strategy to avoid repetitive patterns.
+Use recursive backtracking if constraints cannot be met in a given configuration.
+Handle edge cases like:
+If a practical slot cannot be fit before a break, try to adjust the earlier slots.
+If a day has no space for a practical, shift it to the next day.

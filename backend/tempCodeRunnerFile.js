@@ -1,0 +1,1 @@
+(currentPracticals / 2) < maxPracticalsPerDay

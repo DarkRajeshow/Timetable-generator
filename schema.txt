@@ -1,0 +1,209 @@
+import mongoose from "mongoose";
+
+const mainTimeTableSchema = new mongoose.Schema({
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Class', // References Class
+    required: true
+  },
+  week: [
+    {
+      day: {
+        type: String,
+        enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        required: true
+      },
+      timetable: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'DayTimeTable', // References DayTimeTable
+        required: true
+      }
+    }
+  ],
+  subjectTeacherBindings: [
+    {
+      subject: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject',
+        required: true
+      },
+      teacher: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+      type: {
+        type: String,
+        enum: ['lecture', 'practical'],
+        required: true
+      },
+      total: {
+        type: Number,
+        required: true // Total number of lectures or practicals in a week
+      },
+      max: {
+        type: Number,
+        required: true // Maximum lectures/practicals a teacher can take per day
+      }
+    }
+  ]
+});
+
+export default mongoose.model('MainTimeTable', mainTimeTableSchema);
+
+
+
+
+import mongoose from 'mongoose'
+
+const timeSlotSchema = new mongoose.Schema({
+    starts: {
+        type: String,
+        required: true
+    },
+    ends: {
+        type: String,
+        required: true
+    },
+    teacher: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // References Teacher
+        required: true
+    },
+    subject: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject', // References Subject
+        required: true
+    },
+    type: {
+        type: String,
+        enum: ['Lecture', 'Practical'], // Slot type
+        required: true
+    }
+});
+
+export default mongoose.model('TimeSlot', timeSlotSchema);
+
+
+
+import mongoose from 'mongoose';
+
+const dayTimeTableSchema = new mongoose.Schema({
+    class: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Class',
+        required: true
+    },
+    day: {
+        type: String,
+        enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        required: true
+    },
+    slots: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'TimeSlot',
+            required: true
+        }
+    ]
+});
+
+export default mongoose.model('DayTimeTable', dayTimeTableSchema);
+
+import mongoose from 'mongoose';
+
+const classSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true // Ensure each class has a unique name
+    },
+    students: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User' // References the User model for student details
+        }
+    ],
+    timetable: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Timetable' // References the Timetable model for this class
+    }
+}, { timestamps: true });
+
+export default mongoose.model('Class', classSchema);
+
+
+
+import mongoose from 'mongoose';
+
+const subjectSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  teachers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TimeSlot',
+    }
+  ]
+}, { timestamps: true });
+
+export default mongoose.model('Subject', subjectSchema);
+
+
+
+import mongoose from 'mongoose';
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'teacher', 'student'],
+    required: true
+  },
+  
+  // Additional fields for teacher/student specifics
+  subjects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
+      required: function () {
+        return this.role === 'teacher';
+      }
+    }
+  ],
+
+  assignedClass: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Class',
+    required: function () {
+      return this.role === 'student';
+    }
+  }
+}, { timestamps: true });
+
+export default mongoose.model('User', userSchema);
