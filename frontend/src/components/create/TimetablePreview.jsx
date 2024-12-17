@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import "jspdf-autotable";
 import { create } from "../../utils/api";
 import { toast } from "sonner";
 import mergePracticalSlots from "../../utils/mergeSlots";
