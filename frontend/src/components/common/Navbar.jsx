@@ -14,23 +14,27 @@ const Navbar = () => {
         { to: '/admin/subjects', label: 'Subjects' },
         { to: '/admin/users', label: 'Users' },
         { to: '/admin/classes', label: 'Classes' },
+        { to: '/admin/contacts', label: 'New Contacts' },
     ];
 
     const studentLinks = [
         { to: '/', label: 'Home' },
         { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
         { to: `/timetables/overview/${user && user?.assignedClass}`, label: 'Timetable' },
     ];
 
     const teacherLinks = [
         { to: '/', label: 'Home' },
         { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
         { to: '/teacher', label: 'Dashboard' },
     ];
 
     const unAuthorizedUserLinks = [
         { to: '/', label: 'Home' },
         { to: '/about', label: 'About' },
+        { to: '/contact', label: 'Contact' },
     ];
 
     const renderNavLink = (to, label) => {

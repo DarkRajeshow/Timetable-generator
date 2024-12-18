@@ -8,6 +8,7 @@ import userRoutes from './routes/user.routes.js';
 import timetableRoutes from './routes/timetable.routes.js';
 import subjectRoutes from './routes/subject.routes.js';
 import classRoutes from './routes/class.routes.js';
+import contactRoutes from './routes/contact.routes.js';
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/timetables', timetableRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/classes', classRoutes);
+app.use('/api/contacts', contactRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

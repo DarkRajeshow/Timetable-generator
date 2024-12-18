@@ -6,6 +6,7 @@ import {
     SunIcon,
     LinkIcon,
     MoonIcon,
+    PhoneCallIcon,
 } from 'lucide-react';
 import {
     BarChart,
@@ -81,6 +82,11 @@ const AdminDashboard = () => {
             title: 'Manage Classes',
             icon: <UserIcon className="size-6 text-blue-500" />,
             link: '/admin/classes'
+        },
+        {
+            title: 'View New Contacts',
+            icon: <PhoneCallIcon className="size-6 text-blue-500" />,
+            link: '/admin/contacts'
         }
     ];
 

@@ -24,6 +24,8 @@ import TimetableOverview from './components/create/TimetableOverview';
 import { Toaster } from 'sonner';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/common/Footer';
+import ContactPage from './pages/ContactPage';
+import ContactMessagesPage from './pages/ContactMessagesPage';
 
 // Authentication Context
 export const AuthContext = React.createContext({
@@ -71,6 +73,7 @@ const App = () => {
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
 
             <Route
               path="/login"
@@ -130,6 +133,20 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/admin/contacts"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={isAuthenticated}
+                  userRole={user?.role}
+                  requiredRole="admin"
+                >
+                  <ContactMessagesPage />
+                </ProtectedRoute>
+              }
+            />
+            
             <Route
               path="/admin/classes/add"
               element={

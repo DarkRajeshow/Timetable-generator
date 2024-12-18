@@ -90,9 +90,12 @@ export const create = {
     saveDayTimetable: (classId, dayData) => request(`/timetables/daily/${classId}`, 'POST', dayData),
     getFullTimetable: (classId) => request(`/timetables/${classId}/full`),
     getDayTimetable: (classId, day) => request(`/timetables/${classId}/${day}`),
-
-
     delete: (id) => request(`/timetables/${id}`, 'DELETE')
+};
+
+export const contact = {
+    create: (contactData) => request('/contacts', 'POST', contactData),
+    getAll: () => request('/contacts'),
 };
 
 // Export the axios instance for direct use
