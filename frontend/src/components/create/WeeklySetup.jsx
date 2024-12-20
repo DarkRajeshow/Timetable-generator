@@ -417,7 +417,7 @@ const WeeklySetup = () => {
                                                 {binding.type.charAt(0).toUpperCase() + binding.type.slice(1)}
                                             </div>
                                             <div className='py-2 sm:py-3 bg-white rounded-sm'>
-                                                <span className="font-medium">Time Slots:</span>{' '}
+                                                <span className="font-medium">Target slots:</span>{' '}
                                                 {binding.total}
                                             </div>
                                             <div className='py-2 sm:py-3 bg-white rounded-sm'>
@@ -456,7 +456,7 @@ const WeeklySetup = () => {
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         <Link
                             to={`/admin/timetables/${classId}/monday`}
-                            className="flex-1 flex items-center justify-center gap-2 text-xs sm:text-sm p-2 sm:p-3 rounded transition duration-300 bg-blue-600 text-white hover:bg-blue-700"
+                            className="flex-1 flex items-center justify-center gap-2 text-base sm:text-xl p-3 sm:p-6 rounded transition duration-300 bg-blue-600 text-white hover:bg-blue-700"
                         >
                             Schedule manually
                             <ForwardIcon className='w-4 h-4 sm:w-5 sm:h-5' />

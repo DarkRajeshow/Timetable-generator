@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
     Copy,
-    Edit,
-    Trash2,
     Search,
     UserCircle2,
     MailIcon,
     PhoneCall
 } from 'lucide-react';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 import { contact } from '../utils/api';
 import ContactMessagesSkeleton from '../components/common/ContactMessagesSkeleton';
 
@@ -73,8 +71,6 @@ const ContactMessagesPage = () => {
         toast.success(`${type} copied to clipboard`);
     };
 
-    // Render empty state
-    if (loading) return <ContactMessagesSkeleton />;
     if (error) return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
             <p className="text-red-500 mb-4">{error}</p>
@@ -88,12 +84,11 @@ const ContactMessagesPage = () => {
     );
 
     return (
-        <div className="px-10 sm:px-16 md:px-20 lg:px-24 mx-auto py-8 min-h-screen">
-            <Toaster richColors />
-
+        <div className="px-4 sm:px-16 md:px-20 lg:px-24 mx-auto py-8 min-h-screen">
+            {loading && <ContactMessagesSkeleton loading={loading} />}
             {/* Search and Sort Controls */}
             <div className="mb-6 flex flex-col md:flex-row gap-4 items-center">
-                <div className="relative flex-grow">
+                <div className="relative flex-grow flex items-center w-full">
                     <input
                         type="text"
                         placeholder="Search messages..."
@@ -109,11 +104,11 @@ const ContactMessagesPage = () => {
                     <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="border rounded px-2 py-1 bg-gray-50 border-gray-300"
+                        className="border text-sm rounded px-2 py-1 bg-gray-50 border-gray-300"
                     >
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                        <option value="alphabetical">Alphabetical</option>
+                        <option value="newest" className='text-xs'>Newest First</option>
+                        <option value="oldest" className='text-xs'>Oldest First</option>
+                        <option value="alphabetical" className='text-xs'>Alphabetical</option>
                     </select>
                 </div>
             </div>
@@ -180,7 +175,6 @@ const ContactMessagesPage = () => {
                     ))}
                 </div>
             )}
-
         </div>
     );
 };
