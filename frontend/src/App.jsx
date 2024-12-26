@@ -26,6 +26,7 @@ import AboutPage from './pages/AboutPage';
 import Footer from './components/common/Footer';
 import ContactPage from './pages/ContactPage';
 import ContactMessagesPage from './pages/ContactMessagesPage';
+import Practice from './pages/Practice';
 
 // Authentication Context
 export const AuthContext = React.createContext({
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/practice" element={<Practice />} />
 
             <Route
               path="/login"

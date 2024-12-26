@@ -417,7 +417,7 @@ const WeeklySetup = () => {
                                                 {binding.type.charAt(0).toUpperCase() + binding.type.slice(1)}
                                             </div>
                                             <div className='py-2 sm:py-3 bg-white rounded-sm'>
-                                                <span className="font-medium">Target slots:</span>{' '}
+                                                <span className="font-medium">Target {binding.type}s:</span>{' '}
                                                 {binding.total}
                                             </div>
                                             <div className='py-2 sm:py-3 bg-white rounded-sm'>

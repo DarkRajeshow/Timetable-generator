@@ -24,6 +24,11 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/timetable
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+
+app.get("/", (req, res) => {
+    res.send("backend Working")
+})
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/timetables', timetableRoutes);
