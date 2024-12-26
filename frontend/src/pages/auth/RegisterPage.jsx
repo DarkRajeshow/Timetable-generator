@@ -258,7 +258,7 @@ const RegisterPage = () => {
                             Select Your Role
                         </label>
                         <div className="flex space-x-2">
-                            {['student', 'teacher'].map(role => (
+                            {['student', 'teacher', 'admin'].map(role => (
                                 <button
                                     type="button"
                                     key={role}

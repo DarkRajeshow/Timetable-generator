@@ -7,6 +7,13 @@ import MainTimeTable from '../models/MainTimeTable.js';
 import TimeSlot from '../models/TimeSlot.js'
 import DayTimeTable from '../models/DayTimeTable.js';
 
+// res.cookie('jwt', token, {
+//   maxAge: 15 * 24 * 60 * 60 * 1000,
+//   secure: isProduction,
+//   httpOnly: true,
+//   sameSite: "strict"
+// });
+
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: '30d'
