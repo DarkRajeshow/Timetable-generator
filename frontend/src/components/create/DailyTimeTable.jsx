@@ -13,7 +13,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue
-} from '../ui/Select';
+} from '../ui/select';
 import { create } from '../../utils/api';
 import { ForwardIcon } from 'lucide-react';
 import { dailyTimeSlots } from '../../constants';

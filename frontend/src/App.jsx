@@ -19,7 +19,7 @@ import AddClass from './pages/class/AddClass';
 import ManageClasses from './pages/admin/ManageClass';
 import AddSubject from './pages/subject/AddSubject';
 import WeeklySetup from './components/create/WeeklySetup';
-import DailyTimetable from './components/create/DailyTimeTable';
+import DailyTimetable from './components/create/DailyTimetable';
 import TimetableOverview from './components/create/TimetableOverview';
 import { Toaster } from 'sonner';
 import AboutPage from './pages/AboutPage';

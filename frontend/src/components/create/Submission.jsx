@@ -6,14 +6,14 @@ import {
     CardTitle,
     CardContent,
     CardFooter
-} from '../ui/Card';
+} from '../ui/card';
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogDescription
-} from '../ui/Dialog';
+} from '../ui/card';
 
 const Submission = () => {
     const [subjectSummary, setSubjectSummary] = useState([]);
