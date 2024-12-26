@@ -19,7 +19,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "../ui/dialog";
-import TimetablePreview from './TimeTablePreview';
+import TimetablePreview from './TimetablePreview';
 import Confetti from 'react-confetti'
 
 
