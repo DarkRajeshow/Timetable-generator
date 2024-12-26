@@ -1,5 +1,5 @@
 import MainTimeTable from '../models/MainTimeTable.js';
-import DayTimeTable from '../models/DayTimeTable.js';
+import DayTimeTable from '../models/DayTimetable.js';
 import TimeSlot from '../models/TimeSlot.js';
 import Class from '../models/Class.js';
 import mongoose from 'mongoose';

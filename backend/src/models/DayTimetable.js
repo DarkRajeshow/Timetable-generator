@@ -21,5 +21,10 @@ const dayTimeTableSchema = new mongoose.Schema({
 });
 const DayTimeTable = mongoose.models?.DayTimeTable || mongoose.model('DayTimeTable', dayTimeTableSchema);
 
+
+
+
+
+
 export default DayTimeTable;
 

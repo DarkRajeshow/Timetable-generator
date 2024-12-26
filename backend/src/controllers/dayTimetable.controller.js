@@ -1,4 +1,4 @@
-import DayTimeTable from "../models/DayTimeTable";
+import DayTimeTable from "../models/DayTimetable";
 
 export const createDayTimetable = async (req, res) => {
     try {
