@@ -14,7 +14,7 @@ import {
 import { Input } from "../../components/ui/input";
 import { subjectAPI } from '../../utils/api';
 import { toast } from 'sonner';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 
 
 // Zod schema for form validation

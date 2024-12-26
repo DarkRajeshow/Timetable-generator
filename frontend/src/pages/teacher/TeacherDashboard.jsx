@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/ca
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { authAPI } from '../../utils/api';
 import { toast } from 'sonner';
-import { Button } from '../../components/ui/Button';
+import { Button } from '../../components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../../components/ui/sheet';
 
 const TeacherDashboard = () => {

@@ -35,8 +35,8 @@ import {
 
 import SubjectForm from '../subject/SubjectForm';
 import { subjectAPI } from '../../utils/api';
-import { Button } from '../../components/ui/Button';
 import { toast } from 'sonner';
+import { Button } from '../../components/ui/button';
 
 const ManageSubjects = () => {
     const [subjects, setSubjects] = useState([]);
