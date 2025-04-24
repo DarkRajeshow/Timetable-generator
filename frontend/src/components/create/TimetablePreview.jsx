@@ -4,8 +4,6 @@ import { toast } from "sonner";
 import mergePracticalSlots from "../../utils/mergeSlots";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 const TimetablePreview = ({ classId, version }) => {
     const [weeklySchedule, setWeeklySchedule] = useState(null);
 
@@ -21,6 +19,9 @@ const TimetablePreview = ({ classId, version }) => {
         "5:00 PM - 6:00 PM",
     ];
 
+    // Define the correct order of days
+    const orderedDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
     const navigate = useNavigate()
     const navigateToTimetableOverview = () => {
         navigate(`/timetables/overview/${classId}`)
@@ -31,7 +32,31 @@ const TimetablePreview = ({ classId, version }) => {
             const response = await create.getFullTimetable(classId);
 
             if (response.success) {
-                setWeeklySchedule(response?.data?.weeklySchedule);
+                // Get the original data from the API
+                const originalData = response?.data?.weeklySchedule;
+                
+                if (originalData) {
+                    // If the data is already an array, sort it by day order
+                    if (Array.isArray(originalData)) {
+                        const orderedSchedule = [...originalData].sort((a, b) => {
+                            return orderedDays.indexOf(a.day) - orderedDays.indexOf(b.day);
+                        });
+                        setWeeklySchedule(orderedSchedule);
+                    } 
+                    // If the data is an object with day keys (as in your example)
+                    else {
+                        // Convert to ordered array while preserving all original data
+                        const orderedSchedule = orderedDays
+                            .filter(day => originalData[day]) // Only include days that exist in the data
+                            .map(day => ({
+                                day: day,
+                                slots: originalData[day]
+                            }));
+                        setWeeklySchedule(orderedSchedule);
+                    }
+                } else {
+                    setWeeklySchedule(null);
+                }
                 return;
             }
             toast.error(response.message);
@@ -66,11 +91,9 @@ const TimetablePreview = ({ classId, version }) => {
                     </thead>
                     <tbody>
                         {weeklySchedule.map((daySchedule, dayIndex) => {
-
                             return (
                                 <tr
                                     key={dayIndex}
-
                                 >
                                     <td>{daySchedule.day}</td>
                                     {dailyTimeSlots.map((timeSlot, slotIndex) => {
@@ -116,5 +139,3 @@ const TimetablePreview = ({ classId, version }) => {
 };
 
 export default TimetablePreview;
-
-
